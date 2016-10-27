@@ -5,6 +5,7 @@ date: "10/20/2016"
 output: html_document
 ---
 ```{r}
+require(gglot2) #loading required package
 
 explore <- function (dataframe, plotswitch, threshold, numberbins) {
 #datafame -- A dataframe
