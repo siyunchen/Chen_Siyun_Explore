@@ -12,7 +12,7 @@ explore <- function (dataframe, plotswitch, threshold, numberbins) {
 #datafame -- A dataframe
 #plotswitch -- A plot switch that can accept three values: off,on,orgrid
 #threshold -- A threshold cut-off value between 0 and 1 for correlations
-#numberbins -- An optional vector that contains one or more integers that represent the numbers of                  bins to use for a histogram. If the vector is not provided, then let ggplot use it’s                 default.
+#numberbins -- An optional vector that contains one or more integers that represent the numbers of bins to use for a histogram. If the vector is not provided, then let ggplot use it’s default.
 
     x=list()  #initialize the return list
     for (i in names(dataframe)){ #for loop over all columns of the dataframe
