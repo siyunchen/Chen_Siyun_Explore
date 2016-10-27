@@ -5,8 +5,6 @@ date: "10/20/2016"
 output: html_document
 ---
 ```{r}
-require(ggplot2) #loading required package: ggplot2
-require(grid) #loading required package: grid
 
 explore <- function (dataframe, plotswitch, threshold, numberbins) {
 #datafame -- A dataframe
