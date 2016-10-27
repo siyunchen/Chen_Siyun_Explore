@@ -1,0 +1,51 @@
+---
+title: "Explore_Chen_Siyun"
+author: "Siyun Chen"
+date: "10/20/2016"
+output: html_document
+---
+```{r}
+require(ggplot2) #loading required package: ggplot2
+require(grid) #loading required package: grid
+
+explore <- function (dataframe, plotswitch, threshold, numberbins) {
+#datafame -- A dataframe
+#plotswitch -- A plot switch that can accept three values: off,on,orgrid
+#threshold -- A threshold cut-off value between 0 and 1 for correlations
+#numberbins -- An optional vector that contains one or more integers that represent the numbers of                  bins to use for a histogram. If the vector is not provided, then let ggplot use it’s                 default.
+
+    x=list()  #initialize the return list
+    for (i in names(dataframe)){ #for loop over all columns of the dataframe
+        if (is.numeric(dataframe[[i]])){ #if it is the numeric column of the dataframe 
+            x[[length(x)+1]] <- summary(dataframe[[i]]) #get the summary statistics table of the numeric column of the dataframe
+        } else { #if it is the categorical or logical column
+            x[[length(x)+1]] <- table(dataframe[[i]]) #get the frequency table of the the categorical or logical column of the dataframe
+        }
+    }
+    pairs <- c(); #contains pair of column names 
+    corcos <- c(); #contains correlation coefficients
+    nms <- names(dataframe) #get the names of columns 
+    for (i in c(1:(length(nms)-1))){
+        ni <- nms[[i]] #the name of i-th column
+        if (is.numeric(dataframe[[ni]])){
+            for (j in c((i+1): length(nms))){
+                nj <- nms[[j]] #the name of j-th column
+                if (is.numeric(dataframe[[nj]])){
+                    cij <- cor(dataframe[[ni]], dataframe[[nj]]) #compute the correlation coefficient
+                    if (abs(cij) > threshold) #compare cij with the correlation threshold, if the correlation coefficient is larger than the correlation threshold
+                    {
+                        pairs[[length(pairs)+1]] <- paste(ni, nj, sep='-') #save the column names
+                        corcos[[length(corcos)+1]] <- cij #save cij
+                    }
+                }
+            }
+        }
+    }
+    cp <- data.frame(pairs, corcos) #form dataframe
+    colnames(cp) <-c('Variable Pairs', 'Pearson Exceeds Threshold') #change the column names
+    x[[length(x)+1]] <- cp #add to list
+    return(x)
+}
+```
+
+
